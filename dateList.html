@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const start = "2019-01-25";
+        const end = "2019-05-03";
+        
+        console.log('startDate:', start);
+        console.log('endDate:', end);
+
+        const dateList = getDateList(start, end, 'date');
+        const monthList = getDateList(start, end, 'month');
+
+        console.log('dateList', dateList);
+        console.log('monthList', monthList);
+
+        function getDateList(start, end, type) {
+            const startTime = getDate(start, type);
+            const endTime = getDate(end, type);
+            const arr = [];
+            do {
+                const year = startTime.getFullYear();
+                const month = startTime.getMonth() + 1 < 10 ?
+                    "0" + (startTime.getMonth() + 1) : startTime.getMonth() + 1;
+                const day = startTime.getDate() < 10 ?
+                    "0" + startTime.getDate() : startTime.getDate();
+                type === 'date' ? startTime.setDate(startTime.getDate() + 1) && arr.push(year + "-" + month + "-" + day) :
+                    startTime.setMonth(startTime.getMonth() + 1) && arr.push(year + "-" + month);
+            }
+            while ((endTime.getTime() - startTime.getTime()) >= 0)
+            return arr;
+        }
+
+        function getDate(datestr, type) {
+            const temp = datestr.split("-");
+            const date = type === 'date' ? new Date(temp[0], parseInt(temp[1]) - 1, temp[2]) :
+                new Date(temp[0], parseInt(temp[1]) - 1);
+            return date;
+        }
+    </script>
+</body>
+
+</html>
